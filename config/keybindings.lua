@@ -28,6 +28,18 @@ function M.apply(config)
         { key = "F11", mods = "NONE", action = act.ToggleFullScreen },
         { key = "m", mods = "LEADER", action = act.Hide },
 
+        -- Leader+d: 切换窗口栏（标题栏 + 最大化/最小化/关闭按钮）显示与隐藏
+        {
+            key = "d",
+            mods = "LEADER",
+            action = wezterm.action_callback(function(window, _pane)
+                local overrides = window:get_config_overrides() or {}
+                local current = overrides.window_decorations or "TITLE | RESIZE"
+                overrides.window_decorations = (current == "NONE") and "TITLE | RESIZE" or "NONE"
+                window:set_config_overrides(overrides)
+            end),
+        },
+
         -- ========== 标签页管理 ==========
         { key = "n", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
         { key = "w", mods = "LEADER", action = act.CloseCurrentTab({ confirm = false }) },
@@ -96,7 +108,9 @@ function M.apply(config)
                 choices = color_scheme_choices,
                 action = wezterm.action_callback(function(window, _pane, _id, label)
                     if label then
-                        window:set_config_overrides({ color_scheme = label })
+                        local overrides = window:get_config_overrides() or {}
+                        overrides.color_scheme = label
+                        window:set_config_overrides(overrides)
                         wezterm.log_info("配色方案已切换为: " .. label)
                     end
                 end),

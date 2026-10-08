@@ -20,7 +20,12 @@ function M.apply(config)
             mods = "NONE",
             action = act.PasteFrom("Clipboard"),
         },
-        -- Ctrl+Alt+拖动：移动窗口
+        -- Ctrl+Alt+拖动：移动窗口（Down 拦截默认 pane select，Drag 执行移动）
+        {
+            event = { Down = { streak = 1, button = "Left" } },
+            mods = "CTRL|ALT",
+            action = act.Nop,
+        },
         {
             event = { Drag = { streak = 1, button = "Left" } },
             mods = "CTRL|ALT",
