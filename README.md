@@ -123,3 +123,7 @@ config/
 
 - `LEADER` 即 `Ctrl+A`：按下后松开，再按后面的键，1.5 秒内有效。
 - 配色方案和窗口栏的切换走的是 `set_config_overrides`（只影响当前窗口，不写配置文件），且每次都是先读出现有覆盖再改其中一个键，所以 `LEADER+s` 和 `LEADER+d` 不会互相覆盖。
+
+## 排错记录
+
+- [X11 转发：Windows + Xming → 远程容器](docs/x11-forwarding.md) — `feh: Can't open X display` 的三层根因与修复（DISPLAY、`-Y`、zellij 环境冻结）。
